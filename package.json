@@ -33,7 +33,6 @@
     "reactstrap": "^9.2.3",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^3.1.0",
     "swiper": "^11.1.14",
     "web-vitals": "^2.1.4"
   },
@@ -61,10 +60,9 @@
       "last 1 safari version"
     ]
   },
- 
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0", 
+    "@babel/preset-env": "^7.26.0",
     "babel-loader": "^9.2.1",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
