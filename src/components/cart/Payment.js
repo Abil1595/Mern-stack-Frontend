@@ -80,7 +80,7 @@ export default function Payment() {
 
         try {
             // Call your backend to create the Razorpay order
-            const { data } = await axios.post('/api/v1/payment/process', paymentData);
+            const { data } = await axios.post('https://mern-stack-backend-5.onrender.com/api/v1/payment/process', paymentData);
             const orderId = data.order_id; // Razorpay order_id from backend
 
             // Load the Razorpay script if not already loaded
@@ -105,7 +105,7 @@ export default function Payment() {
                     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
 
                     // Verify payment signature with your backend
-                    const verificationResponse = await axios.post('/api/v1/payment/verify', {
+                    const verificationResponse = await axios.post('https://mern-stack-backend-5.onrender.com/api/v1/payment/verify', {
                         razorpay_order_id,
                         razorpay_payment_id,
                         razorpay_signature,
@@ -165,7 +165,7 @@ export default function Payment() {
                         Pay - ₹{totalPrice}
                     </button>
                 </form>
-            </div>
+            </div><br/><br/>
         </div>
     );
 }

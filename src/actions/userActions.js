@@ -27,8 +27,7 @@ import {
     otpVerifyRequest,
     otpVerifySuccess,
     otpVerifyFail,
-    otpSentSuccess,
-    otpSentFail,
+    
     resendOtpSuccess,
     resendOtpFail
 } from "../slices/authSlice";
@@ -51,12 +50,22 @@ import {
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch(loginRequest());
-        const { data } = await axios.post(`api/v1/login`, { email, password });
+
+       
+        const { data } = await axios.post(`https://mern-stack-backend-5.onrender.com/api/v1/login`, { email, password });
+
+        
+
         dispatch(loginSuccess(data));
+       
+        
+
     } catch (error) {
+        
         dispatch(loginFail(error.response.data.message));
     }
 };
+
 
 export const clearAuthError = () => (dispatch) => {
     dispatch(clearError());
@@ -65,7 +74,7 @@ export const clearAuthError = () => (dispatch) => {
 export const register = (formData) => async (dispatch) => { // Adjusted to accept formData
     try {
         dispatch(registerRequest());
-        const response = await axios.post('/api/v1/register', formData); // Adjust URL as necessary
+        const response = await axios.post('https://mern-stack-backend-5.onrender.com/api/v1/register', formData); // Adjust URL as necessary
         dispatch(registerSuccess(response.data));
     } catch (error) {
         const errorMessage = error.response?.data?.message || "Registration failed";
@@ -77,7 +86,7 @@ export const register = (formData) => async (dispatch) => { // Adjusted to accep
 export const loadUser = createAsyncThunk('user/loadUser', async (_, { dispatch }) => {
     try {
         dispatch(loadUserRequest());
-        const { data } = await axios.get('/api/v1/myprofile');
+        const { data } = await axios.get('https://mern-stack-backend-5.onrender.com/api/v1/myprofile');
         dispatch(loadUserSuccess(data));
     } catch (error) {
         dispatch(loadUserFail(error.response.data.message));
@@ -86,8 +95,9 @@ export const loadUser = createAsyncThunk('user/loadUser', async (_, { dispatch }
 }); 
 
 export const logoutUser = createAsyncThunk('auth/logout', async () => {
-    const response = await axios.get('/api/v1/logout'); // Adjust the URL as needed
+    const response = await axios.get('https://mern-stack-backend-5.onrender.com/api/v1/logout'); // Adjust the URL as needed
     return response.data; // Return the response data
+   
 });
 export const updateProfile = (userData) => async (dispatch) => {
     try {
@@ -97,7 +107,7 @@ export const updateProfile = (userData) => async (dispatch) => {
                 'Content-type': 'multipart/form-data'
             }
         };
-        const { data } = await axios.put(`/api/v1/update`, userData, config);
+        const { data } = await axios.put(`https://mern-stack-backend-5.onrender.com/api/v1/update`, userData, config);
         dispatch(updateProfileSuccess(data));
     } catch (error) {
         dispatch(updateProfileFail(error.response.data.message));
@@ -112,7 +122,7 @@ export const updatePassword = (formData) => async (dispatch) => {
                 'Content-type': 'application/json'
             }
         };
-        await axios.put(`/api/v1/password/change`, formData, config);
+        await axios.put(`https://mern-stack-backend-5.onrender.com/api/v1/password/change`, formData, config);
         dispatch(updatePasswordSuccess());
     } catch (error) {
         dispatch(updatePasswordFail(error.response.data.message));
@@ -127,7 +137,7 @@ export const forgotPassword = (formData) => async (dispatch) => {
                 'Content-type': 'application/json'
             }
         };
-        const { data } = await axios.post(`/api/v1/password/forgot`, formData, config);
+        const { data } = await axios.post(`https://mern-stack-backend-5.onrender.com/api/v1/password/forgot`, formData, config);
         dispatch(forgotPasswordSuccess(data));
     } catch (error) {
         dispatch(forgotPasswordFail(error.response.data.message));
@@ -142,7 +152,7 @@ export const resetPassword = (formData, token) => async (dispatch) => {
                 'Content-type': 'application/json'
             }
         };
-        const { data } = await axios.post(`/api/v1/password/reset/${token}`, formData, config);
+        const { data } = await axios.post(`https://mern-stack-backend-5.onrender.com/api/v1/password/reset/${token}`, formData, config);
         dispatch(resetPasswordSuccess(data));
     } catch (error) {
         dispatch(resetPasswordFail(error.response.data.message));
@@ -152,7 +162,7 @@ export const resetPassword = (formData, token) => async (dispatch) => {
 export const getUsers = async (dispatch) => {
     try {
         dispatch(usersRequest());
-        const { data } = await axios.get(`/api/v1/admin/users`);
+        const { data } = await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/admin/users`);
         dispatch(usersSuccess(data));
     } catch (error) {
         dispatch(usersFail(error.response.data.message));
@@ -162,7 +172,7 @@ export const getUsers = async (dispatch) => {
 export const getUser = id => async (dispatch) => {
     try {
         dispatch(userRequest());
-        const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+        const { data } = await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/admin/user/${id}`);
         dispatch(userSuccess(data));
     } catch (error) {
         dispatch(userFail(error.response.data.message));
@@ -172,7 +182,7 @@ export const getUser = id => async (dispatch) => {
 export const deleteUser = id => async (dispatch) => {
     try {
         dispatch(deleteUserRequest());
-        await axios.delete(`/api/v1/admin/user/${id}`);
+        await axios.delete(`https://mern-stack-backend-5.onrender.com/api/v1/admin/user/${id}`);
         dispatch(deleteUserSuccess());
     } catch (error) {
         dispatch(deleteUserFail(error.response.data.message));
@@ -187,7 +197,7 @@ export const updateUser = (id, formData) => async (dispatch) => {
                 'Content-type': 'application/json'
             }
         };
-        await axios.put(`/api/v1/admin/user/${id}`, formData, config);
+        await axios.put(`https://mern-stack-backend-5.onrender.com/api/v1/admin/user/${id}`, formData, config);
         dispatch(updateUserSuccess());
     } catch (error) {
         dispatch(updateUserFail(error.response.data.message));
@@ -198,7 +208,7 @@ export const verifyOTP = (email, otp) => async (dispatch) => {
     try {
         dispatch(otpVerifyRequest());
         // Make sure to send email and otp as expected by your backend
-        const response = await axios.post('/api/v1/otp-verify', { email, otp });
+        const response = await axios.post('https://mern-stack-backend-5.onrender.com/api/v1/otp-verify', { email, otp });
         dispatch(otpVerifySuccess(response.data));
     } catch (error) {
         const errorMessage = error.response?.data?.message || "OTP verification failed";
@@ -209,7 +219,7 @@ export const verifyOTP = (email, otp) => async (dispatch) => {
 export const resendOtp = (email) => async (dispatch) => {
     try {
         dispatch(resendOtpSuccess()); // Dispatch success action to indicate OTP is being sent
-        const response = await axios.post('/api/v1/otp-resent', { email }); // Adjust the URL if necessary
+        const response = await axios.post('https://mern-stack-backend-5.onrender.com/api/v1/otp-resent', { email }); // Adjust the URL if necessary
         dispatch(resendOtpSuccess(response.data)); // Dispatch success with response data
     } catch (error) {
         const errorMessage = error.response?.data?.message || "Resending OTP failed";

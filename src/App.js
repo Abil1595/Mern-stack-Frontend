@@ -5,11 +5,11 @@ import Home from './components/Home';
 import { HelmetProvider } from 'react-helmet-async';
 import ProductFiles from './components/productFiles';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 import ProductDetail from './components/product/ProductDetail';
-import ProductSearch from './components/product/ProductSearch';  
+import ProductSearch from './components/product/ProductSearch';
 import Login from './components/user/Login';
-import Register from './components/user/Register'; 
+import Register from './components/user/Register';
 import { useEffect, useState } from 'react';
 import store from './store';
 import { loadUser } from './actions/userActions';
@@ -40,36 +40,33 @@ import ReviewList from './components/admin/ReviewList';
 
 import OtpVerification from './components/user/OtpVerification';
 import AboutUs from './components/layouts/AboutUs';
-
 import OfferProductDetail from './components/OfferProductDetail';
-
-
-
-
-
 
 function App() {
   const [razorpayApiKey, setRazorpayApiKey] = useState("");
 
   useEffect(() => {
-    store.dispatch(loadUser()); // Load user data
+    // Load user data on initial app load
+    store.dispatch(loadUser());
 
     async function getRazorApikey() {
       try {
-        const apiKey="06a4ef90e738b7a0d5a133658ba550ff99d2a5f36351e644f23e51d4a3aa2a26"
-        const { data } = await axios.get(`/api/v1/razorpayapi?apiKey=${apiKey}`);
+        const apiKey = "06a4ef90e738b7a0d5a133658ba550ff99d2a5f36351e644f23e51d4a3aa2a26";
+        const { data } = await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/razorpayapi?apiKey=${apiKey}`);
         setRazorpayApiKey(data.razorpayApiKey);
       } catch (error) {
         console.error("Error fetching Razorpay API Key:", error.response ? error.response.data : error.message);
       }
-    } 
-   
+    }
+
     getRazorApikey();
   }, []);
+
   const categories = [
     'SNACKS', 'GROCERIES', 'HERBAL', 'CANDIES', 'SWEETS',
     'RICE', 'OIL', 'HOMEAPPLIANCES', 'POOJAITEMS',
   ];
+
   return (
     <BrowserRouter>
       <HelmetProvider>
@@ -79,23 +76,20 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/products' element={<ProductFiles />} />
-            
-        <Route path="/search/:keyword?" element={<ProductSearch />} />
-        {categories.map(category => (
-          <Route 
-            key={category}
-            path={`/search/${category.toLowerCase()}`}
-            element={<ProductSearch category={category} />}  
-          />
-        ))}
-      
+            <Route path="/search/:keyword?" element={<ProductSearch />} />
+            {categories.map(category => (
+              <Route 
+                key={category}
+                path={`/search/${category.toLowerCase()}`}
+                element={<ProductSearch category={category} />}
+              />
+            ))}
             <Route path='/product/:id' element={<ProductDetail />} />
-            <Route path='/offerproducts/:id' element={<OfferProductDetail/>} />
-          
+            <Route path='/offerproducts/:id' element={<OfferProductDetail />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/verify-otp' element={<OtpVerification/>} />
-            <Route path='/aboutus' element={<AboutUs/>}/>
+            <Route path='/verify-otp' element={<OtpVerification />} />
+            <Route path='/aboutus' element={<AboutUs />} />
             <Route path='/myprofile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path='/myprofile/update' element={<ProtectedRoute><UpdateProfile /></ProtectedRoute>} />
             <Route path='/myprofile/update/password' element={<ProtectedRoute><UpdatePassword /></ProtectedRoute>} />
@@ -107,7 +101,6 @@ function App() {
             <Route path='/order/success' element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
             <Route path='/order/:id' element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
             <Route path='/orders' element={<ProtectedRoute><UserOrders /></ProtectedRoute>} />
-            {/* Ensure razorpayApiKey is available before rendering Payment */}
             <Route
               path='/payment'
               element={
@@ -117,19 +110,18 @@ function App() {
               }
             />
           </Routes>
-        </div> 
+        </div>
         <Routes>
-        <Route path='/admin/dashboard' element={<ProtectedRoute isAdmin={true}><Dashboard/></ProtectedRoute>} />
-        <Route path='/admin/products' element={<ProtectedRoute isAdmin={true}><ProductList/></ProtectedRoute>} />
-        <Route path='/admin/products/create' element={<ProtectedRoute isAdmin={true}><NewProduct/></ProtectedRoute>} />
-        <Route path='/admin/product/:id' element={<ProtectedRoute isAdmin={true}><UpdateProduct/></ProtectedRoute>} />
-        <Route path='/admin/orders' element={<ProtectedRoute isAdmin={true}><OrderList/></ProtectedRoute>} />
-        <Route path='/admin/order/:id' element={<ProtectedRoute isAdmin={true}><UpdateOrder/></ProtectedRoute>} />
-        <Route path='/admin/users' element={<ProtectedRoute isAdmin={true}><UserList/></ProtectedRoute>} />
-        <Route path='/admin/user/:id' element={<ProtectedRoute isAdmin={true}><UpdateUser/></ProtectedRoute>} />
-        <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true}><ReviewList/></ProtectedRoute>} />
+          <Route path='/admin/dashboard' element={<ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>} />
+          <Route path='/admin/products' element={<ProtectedRoute isAdmin={true}><ProductList /></ProtectedRoute>} />
+          <Route path='/admin/products/create' element={<ProtectedRoute isAdmin={true}><NewProduct /></ProtectedRoute>} />
+          <Route path='/admin/product/:id' element={<ProtectedRoute isAdmin={true}><UpdateProduct /></ProtectedRoute>} />
+          <Route path='/admin/orders' element={<ProtectedRoute isAdmin={true}><OrderList /></ProtectedRoute>} />
+          <Route path='/admin/order/:id' element={<ProtectedRoute isAdmin={true}><UpdateOrder /></ProtectedRoute>} />
+          <Route path='/admin/users' element={<ProtectedRoute isAdmin={true}><UserList /></ProtectedRoute>} />
+          <Route path='/admin/user/:id' element={<ProtectedRoute isAdmin={true}><UpdateUser /></ProtectedRoute>} />
+          <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true}><ReviewList /></ProtectedRoute>} />
         </Routes>
-        <br /><br />
         <Footer />
       </HelmetProvider>
     </BrowserRouter>

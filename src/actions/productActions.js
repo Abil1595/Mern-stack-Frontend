@@ -8,7 +8,7 @@ import { productFail, productSuccess, productRequest, createReviewRequest, creat
 export const getProducts = (keyword, price, category, rating, currentPage, brands, offerprice) => async (dispatch) => {
     try {
         dispatch(productsRequest());
-        let link = `/api/v1/products?page=${currentPage}`;
+        let link = `https://mern-stack-backend-5.onrender.com/api/v1/products?page=${currentPage}`;
   
         if (keyword) {
             link += `&keyword=${keyword}`;
@@ -51,7 +51,7 @@ export const getProduct = id => async (dispatch) => {
 
     try {  
         dispatch(productRequest()) 
-        const { data }  =  await axios.get(`/api/v1/product/${id}`);
+        const { data }  =  await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/product/${id}`);
         dispatch(productSuccess(data))
     } catch (error) {
         //handle error
@@ -69,7 +69,7 @@ export const createReview = reviewData => async (dispatch) => {
                 'Content-type': 'application/json'
             }
         }
-        const { data }  =  await axios.put(`/api/v1/review`,reviewData, config);
+        const { data }  =  await axios.put(`https://mern-stack-backend-5.onrender.com/api/v1/review`,reviewData, config);
         dispatch(createReviewSuccess(data))
     } catch (error) {
         //handle error
@@ -82,7 +82,7 @@ export const getAdminProducts  =  async (dispatch) => {
 
     try {  
         dispatch(adminProductsRequest()) 
-        const { data }  =  await axios.get(`/api/v1/admin/products`);
+        const { data }  =  await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/admin/products`);
         dispatch(adminProductsSuccess(data))
     } catch (error) {
         //handle error
@@ -95,7 +95,7 @@ export const createNewProduct  =  productData => async (dispatch) => {
 
     try {  
         dispatch(newProductRequest()) 
-        const { data }  =  await axios.post(`/api/v1/admin/product/new`, productData);
+        const { data }  =  await axios.post(`https://mern-stack-backend-5.onrender.com/api/v1/admin/product/new`, productData);
         dispatch(newProductSuccess(data))
     } catch (error) {
         //handle error
@@ -108,7 +108,7 @@ export const deleteProduct  =  id => async (dispatch) => {
 
     try {  
         dispatch(deleteProductRequest()) 
-        await axios.delete(`/api/v1/admin/product/${id}`);
+        await axios.delete(`https://mern-stack-backend-5.onrender.com/api/v1/admin/product/${id}`);
         dispatch(deleteProductSuccess())
     } catch (error) {
         //handle error
@@ -121,7 +121,7 @@ export const updateProduct  =  (id, productData) => async (dispatch) => {
 
     try {  
         dispatch(updateProductRequest()) 
-        const { data }  =  await axios.put(`/api/v1/admin/product/${id}`, productData);
+        const { data }  =  await axios.put(`https://mern-stack-backend-5.onrender.com/api/v1/admin/product/${id}`, productData);
         dispatch(updateProductSuccess(data))
     } catch (error) {
         //handle error
@@ -134,7 +134,7 @@ export const getReviews =  id => async (dispatch) => {
 
     try {  
         dispatch(reviewsRequest()) 
-        const { data }  =  await axios.get(`/api/v1/admin/reviews`,{params: {id}});
+        const { data }  =  await axios.get(`https://mern-stack-backend-5.onrender.com/api/v1/admin/reviews`,{params: {id}});
         dispatch(reviewsSuccess(data))
     } catch (error) {
         //handle error
@@ -147,7 +147,7 @@ export const deleteReview =  (productId, id) => async (dispatch) => {
 
     try {  
         dispatch(deleteReviewRequest()) 
-        await axios.delete(`/api/v1/admin/review`,{params: {productId, id}});
+        await axios.delete(`https://mern-stack-backend-5.onrender.com/api/v1/admin/review`,{params: {productId, id}});
         dispatch(deleteReviewSuccess())
     } catch (error) {
         //handle error

@@ -4,7 +4,7 @@ import { offerProductFail, offerProductRequest, offerProductSuccess } from "../s
 export const getOfferProducts = () => async (dispatch) => {
     try {
         dispatch(offerProductsRequest());
-        const { data } = await axios.get('/api/v1/offerproducts');
+        const { data } = await axios.get('https://mern-stack-backend-e0ji.onrender.com/api/v1/offerproducts');
         console.log("Fetched offer products:", data); // Log the fetched data
         dispatch(offerProductsSuccess(data));
     } catch (error) {
